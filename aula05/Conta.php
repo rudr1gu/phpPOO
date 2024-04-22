@@ -1,55 +1,88 @@
 <?php
-    class Conta{
+    require_once("./IConta.php");
+
+     class Conta implements IConta{
         private $nome;
         private $idade;
         private $numConta;
         private $saldo;
+        public $tipo;
 
-        public function __construct($n, $idade, $num, $s){
+        public function __construct($n, $idade, $num, $s, $t){
             $this->setNome($n);
             $this->setIdade($idade);
             $this->setNumConta($num);
+            $this->setTipo($t);
             $this->setSaldo($s);
+            
         }
 
-        public function getNome(){
+        function getNome(){
             return $this->nome;
         }
-
-        public function setNome($nome){
+    
+        function setNome($nome){
             $this->nome = $nome;
         }
-
-        public function getIdade(){
+    
+        function getIdade(){
             return $this->idade;
         }
-
-        public function setIdade($idade){
+    
+        function setIdade($idade){
             $this->idade = $idade;
         }
-
-        public function getNumConta(){
+    
+        function getNumConta(){
             return $this->numConta;
         }
-
-        public function setNumConta($numConta){
+    
+        function setNumConta($numConta){
             $this->numConta = $numConta;
         }
 
-        public function getSaldo(){
+        function getTipo(){    
+            return $this->tipo;
+           
+        }
+    
+        function setTipo($tipo){
+                $this->tipo = $tipo;
+           
+        }
+
+        function deposito($valor){
+            $this->saldo += $valor;
+            echo("<hr> Deposito no valor de: {$valor}R$ realizado com sucesso! <br><hr>");
+        }
+
+        function saque($valor){
+            if($this->getSaldo() >= $valor){
+                $this->saldo -= $valor;
+                echo("<hr> Saque no valor de: {$valor}R$ realizado com sucesso! <br><hr>");
+            }else{
+                echo("Saldo insulficiente! <br/>");
+                echo("Saldo disponivel para saque: {$this->saldo}<br/>");
+            }
+        }
+
+        function getSaldo(){
             return $this->saldo;
         }
-
-        public function setsaldo($saldo){
-            $this->saldo = $saldo;
+    
+        function setSaldo($saldo){
+            if($this->tipo == "CC"){
+                $this->saldo = $saldo + 100;
+            } else {
+                $this->saldo = $saldo + 30;
+            }
+        }
+    
+        function status(){
+            echo ("Nome:  {$this->getNome()} <br>");
+            echo ("Conta: {$this->getTipo()} <br>");
+            echo ("Número da Conta:  {$this->getNumConta()} <br>");
+            echo ("Saldo: {$this->getSaldo()}<br>");
         }
 
-        public function status(){
-            echo "Nome: " . $this->getNome() . "<br>";
-            echo "Idade: " . $this->getIdade() . "<br>";
-            echo "Número da Conta: " . $this->getNumConta() . "<br>";
-            echo "Saldo: " . $this->getSaldo() . "<br>";
-        }
-
-        
     }
