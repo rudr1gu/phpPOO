@@ -13,6 +13,7 @@
             $c->desligar();
             $c->abrirMenu();
             $c->fecharMenu();
+            $c->ligar();
             $c->maisVolume();        
             $c->maisVolume();        
             $c->maisVolume();        
